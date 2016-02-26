@@ -1,4 +1,4 @@
-# Bunny game
+# Minesweeper game
 
 The simple game for experiments with Javascript, PIXI and ECS.
 

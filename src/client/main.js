@@ -1,8 +1,8 @@
 'use strict';
 
 import Canvas from './constants/canvas';
+import Board from './utility/Board';
 import RenderSystem from './systems/RenderSystem';
-import BoardSystem from './systems/BoardSystem';
 import ControlSystem from './systems/ControlSystem';
 import HungerSystem from './systems/HungerSystem';
 import CollisionSystem from './systems/CollisionSystem';
@@ -22,11 +22,10 @@ loader.once('complete', onAssetsLoaded);
 loader.load();
 
 function onAssetsLoaded() {
-  const board = new BoardSystem(12, 9);
+  const board = new Board(12, 9);
 
   engine.init();
   engine.registerSystem(render);
-  engine.registerSystem(board);
 
   const boardMatrix = board.tiles;
 
@@ -38,9 +37,7 @@ function onAssetsLoaded() {
     }
   }
 
-  const pathfinding = new PathfindingSystem(board);
-
-  engine.registerSystem(pathfinding);
+  engine.registerSystem(new PathfindingSystem(board));
   engine.registerSystem(new ControlSystem());
   engine.registerSystem(new HungerSystem());
   engine.registerSystem(new CollisionSystem());

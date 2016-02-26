@@ -3,8 +3,8 @@
 import TilePrefab from '../prefabs/TilePrefab';
 
 /**
- * @TODO: Эта система что-то делает
- * @class BoardSystem
+ * @TODO: Этот класс создает объект доски и хранит его
+ * @class Board
  */
 export default class BoardSystem {
   /**

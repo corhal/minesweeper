@@ -1,5 +1,5 @@
 {
-  "name": "bunnies",
+  "name": "minesweeper",
   "version": "0.0.1",
   "description": "The simple game",
   "main": "main.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/corhal/bunnies.git"
+    "url": "git+https://github.com/corhal/minesweeper.git"
   },
   "keywords": [
     "game",
@@ -19,9 +19,9 @@
   "author": "Andrey Panfilov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/corhal/bunnies/issues"
+    "url": "https://github.com/corhal/minesweeper/issues"
   },
-  "homepage": "https://github.com/corhal/bunnies#readme",
+  "homepage": "https://github.com/corhal/minesweeper#readme",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "^5.0.0",
