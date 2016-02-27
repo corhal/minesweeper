@@ -1,11 +1,12 @@
 'use strict';
 
 export default class Tile {
-  constructor(x, y, walkable) {
+  constructor(x, y, hasMine) {
     this.position = {
-      x: x, // dont't ask
+      x: x,
       y: y
     };
-    this.walkable = walkable;
+    this.hasMine = hasMine;
+    this.revealed = false;
   }
 }

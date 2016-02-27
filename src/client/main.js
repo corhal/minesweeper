@@ -1,18 +1,14 @@
 'use strict';
 
 import Canvas from './constants/canvas';
+import Transform from './components/Transform';
+import Appearance from './components/Appearance';
+import TextLabel from './prefabs/TextLabel';
 import Board from './utility/Board';
 import RenderSystem from './systems/RenderSystem';
-import ControlSystem from './systems/ControlSystem';
-import HungerSystem from './systems/HungerSystem';
-import CollisionSystem from './systems/CollisionSystem';
-import PathfindingSystem from './systems/PathfindingSystem';
-import MovementSystem from './systems/MovementSystem';
-import Bunny from './prefabs/Bunny';
-import Carrot from './prefabs/Carrot';
 import engine from './engine';
 
-const assetsToLoad = [ 'assets/bunny.png', 'assets/carrot.png', 'assets/tileWalkable.png', 'assets/tileUnwalkable.png'];
+const assetsToLoad = ['assets/bunny.png', 'assets/carrot.png', 'assets/tileWalkable.png', 'assets/tileUnwalkable.png'];
 
 const render = new RenderSystem(Canvas.Width, Canvas.Height, Canvas.BackgroundColor);
 const loader = PIXI.loader;
@@ -34,21 +30,10 @@ function onAssetsLoaded() {
 
     for (let j = 0; j < xArray.length; j++) {
       engine.addEntity(xArray[j]);
+      // console.log(xArray[j].getComponent(Transform));
+      const textEntity = new TextLabel(xArray[j].getComponent(Transform), j);
+      // console.log(textEntity.getComponent(Transform));
+      engine.addEntity(textEntity);
     }
   }
-
-  engine.registerSystem(new PathfindingSystem(board));
-  engine.registerSystem(new ControlSystem());
-  engine.registerSystem(new HungerSystem());
-  engine.registerSystem(new CollisionSystem());
-  engine.registerSystem(new MovementSystem(0, 0, Canvas.Width, Canvas.Height));
-
-  const carl = new Bunny();
-  engine.addEntity(carl);
-
-  window.setInterval(function addCarrot() {
-    if (Math.random() > 0.5) {
-      engine.addEntity(new Carrot());
-    }
-  }, 2000);
 }

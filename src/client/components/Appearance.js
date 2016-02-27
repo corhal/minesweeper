@@ -17,46 +17,51 @@ export default class Appearance {
    * @param {Point} центр трансформации объекта
    * @constructor
    */
-  constructor(sprite, anchor) {
-    /**
-     * @memberof Appearance
-     * @instance
-     * @property {string} sprite
-     */
-    this.sprite = sprite;
+  constructor(sprite, anchor, text) {
+    if (sprite !== undefined) {
+      /**
+       * @memberof Appearance
+       * @instance
+       * @property {string} sprite
+       */
+      this.sprite = sprite;
 
-    /**
-     * @memberof Appearance
-     * @instance
-     * @private
-     * @property {PIXI.Texture} texture
-     */
-    this.texture = PIXI.Texture.fromImage(this.sprite);
+      /**
+       * @memberof Appearance
+       * @instance
+       * @private
+       * @property {PIXI.Texture} texture
+       */
+      this.texture = PIXI.Texture.fromImage(this.sprite);
 
-    /**
-     * @memberof Appearance
-     * @instance
-     * @protected
-     * @property {PIXI.Sprite} object
-     */
-    this.object = new PIXI.Sprite(this.texture);
-    this.object.anchor.x = anchor.x;
-    this.object.anchor.y = anchor.y;
+      /**
+       * @memberof Appearance
+       * @instance
+       * @protected
+       * @property {PIXI.Sprite} object
+       */
+      this.object = new PIXI.Sprite(this.texture);
+      this.object.anchor.x = anchor.x;
+      this.object.anchor.y = anchor.y;
 
-    /**
-     * @memberof Appearance
-     * @instance
-     * @protected
-     * @property {number} number
-     */
-    this.width = this.object.width;
+      /**
+       * @memberof Appearance
+       * @instance
+       * @protected
+       * @property {number} number
+       */
+      this.width = this.object.width;
 
-    /**
-     * @memberof Appearance
-     * @instance
-     * @protected
-     * @property {number} number
-     */
-    this.height = this.object.height;
+      /**
+       * @memberof Appearance
+       * @instance
+       * @protected
+       * @property {number} number
+       */
+      this.height = this.object.height;
+    }
+    if (text !== undefined) {
+      this.object = new PIXI.Text(text);
+    }
   }
 }
