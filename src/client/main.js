@@ -2,7 +2,7 @@
 
 import Canvas from './constants/canvas';
 import Transform from './components/Transform';
-import Appearance from './components/Appearance';
+import Tile from './components/Tile';
 import TextLabel from './prefabs/TextLabel';
 import Board from './utility/Board';
 import RenderSystem from './systems/RenderSystem';
@@ -30,8 +30,14 @@ function onAssetsLoaded() {
 
     for (let j = 0; j < xArray.length; j++) {
       engine.addEntity(xArray[j]);
-      // console.log(xArray[j].getComponent(Transform));
-      const textEntity = new TextLabel(xArray[j].getComponent(Transform), j);
+      const tile = xArray[j].getComponent(Tile);
+      let text;
+      if (tile.hasMine) {
+        text = 1;
+      } else {
+        text = 0;
+      }
+      const textEntity = new TextLabel(xArray[j].getComponent(Transform), text);
       engine.addEntity(textEntity);
     }
   }

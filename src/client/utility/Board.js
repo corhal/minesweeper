@@ -14,6 +14,8 @@ export default class BoardSystem {
    */
   constructor(width, height) {
     this.tiles = [];
+    const sampleTile = new TilePrefab(0, 0);
+    this.tileSize = sampleTile.width;
 
     for (let i = 0; i < height; i++) {
       const xArray = [];
@@ -28,10 +30,6 @@ export default class BoardSystem {
     }
   }
 
-  update() {
-
-  }
-
   /**
    * @method
    * @param {number} x
@@ -39,8 +37,8 @@ export default class BoardSystem {
    * @return {TilePrefab}
    */
   getTileByAbsCoordinates(x, y) {
-    const xFloored = Math.floor(x / 64);
-    const yFloored = Math.floor(y / 64);
+    const xFloored = Math.floor(x / this.tileSize);
+    const yFloored = Math.floor(y / this.tileSize);
 
     const result = this.tiles[yFloored][xFloored];
 
