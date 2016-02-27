@@ -32,7 +32,6 @@ function onAssetsLoaded() {
       engine.addEntity(xArray[j]);
       // console.log(xArray[j].getComponent(Transform));
       const textEntity = new TextLabel(xArray[j].getComponent(Transform), j);
-      // console.log(textEntity.getComponent(Transform));
       engine.addEntity(textEntity);
     }
   }

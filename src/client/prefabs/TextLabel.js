@@ -2,7 +2,7 @@
 
 import Entity from '../Entity';
 import Transform from '../components/Transform';
-import Appearance from '../components/Appearance';
+import Text from '../components/Text';
 
 export default function TextLabel(parentTransform, text) {
   const textLabel = new Entity();
@@ -13,7 +13,7 @@ export default function TextLabel(parentTransform, text) {
       parentTransform.position.y,
       0
       ))
-    .addComponent(new Appearance(undefined, 0, text));
+    .addComponent(new Text(text));
 
   return textLabel;
 }

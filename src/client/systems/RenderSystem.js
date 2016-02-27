@@ -1,6 +1,7 @@
 'use strict';
 
 import Appearance from '../components/Appearance';
+import Text from '../components/Text';
 import Transform from '../components/Transform';
 
 export default class RenderSystem {
@@ -9,7 +10,7 @@ export default class RenderSystem {
       width,
       height,
       { backgroundColor: backgroundColor }
-    );
+      );
     document.body.appendChild(this.renderer.view);
 
     this.stage = new PIXI.Container();
@@ -32,11 +33,22 @@ export default class RenderSystem {
 
   addEntity(entity) {
     const appearance = entity.getComponent(Appearance);
-    const object = appearance.object;
+    if (appearance !== undefined) {
+      const object = appearance.object;
 
-    this.objects[entity.id] = object;
+      this.objects[entity.id] = object;
 
-    this.stage.addChild(object);
+      this.stage.addChild(object);
+    }
+
+    const text = entity.getComponent(Text);
+    if (text !== undefined) {
+      const object = text.text;
+
+      this.objects[entity.id] = object;
+
+      this.stage.addChild(object);
+    }
   }
 
   updateEntity(entity) {
@@ -61,7 +73,7 @@ export default class RenderSystem {
    */
   update(entities) {
     const renderEntities = entities.filter((el) => {
-      return el.hasComponent(Appearance);
+      return el.hasComponent(Appearance) || el.hasComponent(Text);
     });
     const oldIds = Object.keys(this.objects).map((id) => {
       return parseInt(id, 10);
