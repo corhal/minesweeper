@@ -8,17 +8,14 @@ import Tile from '../components/Tile';
 export default function TilePrefab(x, y) {
   const coinToss = Math.random();
   const hasMine = coinToss <= 0.2;
-  const sprite = 'assets/tileUnwalkable.png';
+  const sprite = 'assets/tileUnrevealed.png';
   const appearance = new Appearance(sprite, { x: 0.5, y: 0.5 });
+  const transform = new Transform(x * appearance.width + appearance.width / 2, y * appearance.height + appearance.height / 2, 0);
   const tile = new Entity();
 
   tile
     .addComponent(appearance)
-    .addComponent(new Transform(
-        x * appearance.width + appearance.width / 2,
-        y * appearance.height + appearance.height / 2,
-        0
-    ))
+    .addComponent(transform)
     .addComponent(new Tile(x, y, appearance.width, appearance.height, hasMine));
 
   return tile;

@@ -1,6 +1,7 @@
 'use strict';
 
 import TilePrefab from '../prefabs/TilePrefab';
+import Tile from '../components/Tile';
 
 /**
  * @TODO: Этот класс создает объект доски и хранит его
@@ -15,7 +16,7 @@ export default class BoardSystem {
   constructor(width, height) {
     this.tiles = [];
     const sampleTile = new TilePrefab(0, 0);
-    this.tileSize = sampleTile.width;
+    this.tileSize = sampleTile.getComponent(Tile).width;
 
     for (let i = 0; i < height; i++) {
       const xArray = [];

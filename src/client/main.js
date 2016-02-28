@@ -5,10 +5,11 @@ import Transform from './components/Transform';
 import Tile from './components/Tile';
 import TextLabel from './prefabs/TextLabel';
 import Board from './utility/Board';
+import Game from './utility/Game';
 import RenderSystem from './systems/RenderSystem';
 import engine from './engine';
 
-const assetsToLoad = ['assets/bunny.png', 'assets/carrot.png', 'assets/tileWalkable.png', 'assets/tileUnwalkable.png'];
+const assetsToLoad = ['assets/bunny.png', 'assets/carrot.png', 'assets/tileRevealed.png', 'assets/tileUnrevealed.png'];
 
 const render = new RenderSystem(Canvas.Width, Canvas.Height, Canvas.BackgroundColor);
 const loader = PIXI.loader;
@@ -33,12 +34,14 @@ function onAssetsLoaded() {
       const tile = xArray[j].getComponent(Tile);
       let text;
       if (tile.hasMine) {
-        text = 1;
+        text = '*';
       } else {
-        text = 0;
+        text = '';
       }
       const textEntity = new TextLabel(xArray[j].getComponent(Transform), text);
       engine.addEntity(textEntity);
     }
   }
+
+  const game = new Game(board);
 }

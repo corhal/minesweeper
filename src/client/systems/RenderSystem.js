@@ -16,7 +16,28 @@ export default class RenderSystem {
     this.stage = new PIXI.Container();
     this.objects = {};
 
+    this.spriteContainer = new PIXI.Container();
+    this.textContainer = new PIXI.Container();
+
+    this.spriteContainer.zIndex = 105;
+    this.textContainer.zIndex = 10;
+
+    /* adding children, no matter in which order */
+    this.stage.addChild(this.spriteContainer);
+    this.stage.addChild(this.textContainer);
+
+    this.updateLayersOrder();
+
     this.animate();
+  }
+
+  /* call this function whenever you added a new layer/container */
+  updateLayersOrder() {
+    this.stage.children.sort(function sort(a, b) {
+      a.zIndex = a.zIndex || 0;
+      b.zIndex = b.zIndex || 0;
+      return b.zIndex - a.zIndex;
+    });
   }
 
   animate() {
@@ -38,7 +59,7 @@ export default class RenderSystem {
 
       this.objects[entity.id] = object;
 
-      this.stage.addChild(object);
+      this.spriteContainer.addChild(object);
     }
 
     const text = entity.getComponent(Text);
@@ -47,13 +68,20 @@ export default class RenderSystem {
 
       this.objects[entity.id] = object;
 
-      this.stage.addChild(object);
+      this.textContainer.addChild(object);
     }
   }
 
   updateEntity(entity) {
     const transform = entity.getComponent(Transform);
+    const appearance = entity.getComponent(Appearance);
     const object = this.objects[entity.id];
+
+    if (appearance !== undefined && object !== appearance.object) {
+      console.log('Should change appearance');
+      this.removeEntitiesByIds([entity.id]);
+      this.addEntity(entity);
+    }
 
     object.position.x = transform.position.x;
     object.position.y = transform.position.y;

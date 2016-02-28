@@ -36,8 +36,8 @@ export default class Entity {
     return !!this.components[constr.name];
   }
 
-  removeComponent(component) {
-    delete this.components[component.constructor.name];
+  removeComponent(constr) {
+    delete this.components[constr.name];
 
     return this;
   }

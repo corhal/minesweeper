@@ -7,7 +7,7 @@ export default class Tile {
     this.y = y;
 
     this.hasMine = hasMine;
-    this.revealed = false;
+    this.isRevealed = false;
     this.width = width;
     this.height = height;
   }
