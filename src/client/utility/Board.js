@@ -15,6 +15,7 @@ export default class BoardSystem {
    */
   constructor(width, height) {
     this.tiles = [];
+    this.tileTiles = [];
     const sampleTile = new TilePrefab(0, 0);
     this.tileSize = sampleTile.getComponent(Tile).width;
     this.width = width;
@@ -25,8 +26,10 @@ export default class BoardSystem {
 
       for (let j = 0; j < width; j++) {
         const newTile = new TilePrefab(j, i);
+        const newTileTile = newTile.getComponent(Tile);
 
         xArray.push(newTile);
+        this.tileTiles.push(newTileTile);
       }
 
       this.tiles.push(xArray);
@@ -46,6 +49,16 @@ export default class BoardSystem {
     const result = this.tiles[yFloored][xFloored];
 
     return result;
+  }
+
+  getTileNeighboursTiles(tile, immediate) {
+    let resultArray = [];
+    const returnArray = [];
+    resultArray = this.getTileNeighbours(tile, immediate);
+    for (let i = 0; i < resultArray.length; i++) {
+      returnArray.push(resultArray[i].getComponent(Tile));
+    }
+    return returnArray;
   }
 
   getTileNeighbours(tile, immediate) { // Govnocode time
