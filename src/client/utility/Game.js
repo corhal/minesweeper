@@ -29,11 +29,9 @@ export default class Game {
   }
 
   refreshText(tile) {
-    const textObject = this.getTextByTileCoordinates(tile);
-    let textToRefresh = textObject.getComponent(Text).text.text;
-    textToRefresh = '000';
-    // this.getTextByTileCoordinates(tile).getComponent(Text).text.text = '000';
-    /* const tileNeighbours = this.board.getTileNeighbours(tile, true);
+    const textObject = this.getTextByTileCoordinates(tile).getComponent(Text);
+    const textToRefresh = textObject.text;
+    const tileNeighbours = this.board.getTileNeighbours(tile, false);
     let minesCount = 0;
     let hasUnrevealedNeighbours = false;
     if (tileNeighbours.length > 0) {
@@ -47,10 +45,10 @@ export default class Game {
       }
     }
     if (!hasUnrevealedNeighbours) {
-      textToRefresh = '';
+      textToRefresh.text = '';
     } else {
-      textToRefresh = minesCount;
-    }*/
+      textToRefresh.text = minesCount;
+    }
   }
 
   getTextByTileCoordinates(tile) {

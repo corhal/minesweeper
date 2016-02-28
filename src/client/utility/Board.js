@@ -17,6 +17,8 @@ export default class BoardSystem {
     this.tiles = [];
     const sampleTile = new TilePrefab(0, 0);
     this.tileSize = sampleTile.getComponent(Tile).width;
+    this.width = width;
+    this.height = height;
 
     for (let i = 0; i < height; i++) {
       const xArray = [];
@@ -46,20 +48,43 @@ export default class BoardSystem {
     return result;
   }
 
-  getTileNeighbours(tile, immediate) {
+  getTileNeighbours(tile, immediate) { // Govnocode time
     const resultArray = [];
-    if (immediate) {
-      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
-        resultArray.push(this.tiles[tile.y + 1][tile.x]);
+    const semiResultArray = [];
+
+    if (tile.y < this.height - 1) {
+      semiResultArray.push(this.tiles[tile.y + 1][tile.x]);
+    }
+    if (tile.y > 0) {
+      semiResultArray.push(this.tiles[tile.y - 1][tile.x]);
+    }
+    if (tile.x < this.width - 1) {
+      semiResultArray.push(this.tiles[tile.y][tile.x + 1]);
+    }
+    if (tile.x > 0) {
+      semiResultArray.push(this.tiles[tile.y][tile.x - 1]);
+    }
+
+    if (!immediate) {
+      if (tile.x < this.width - 1 && tile.y < this.height - 1) {
+        semiResultArray.push(this.tiles[tile.y + 1][tile.x + 1]);
       }
-      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
-        resultArray.push(this.tiles[tile.y - 1][tile.x]);
+      if (tile.x > 0 && tile.y > 0) {
+        semiResultArray.push(this.tiles[tile.y - 1][tile.x - 1]);
       }
-      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
-        resultArray.push(this.tiles[tile.y][tile.x + 1]);
+      if (tile.x > 0 && tile.y < this.height - 1) {
+        semiResultArray.push(this.tiles[tile.y + 1][tile.x - 1]);
       }
-      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
-        resultArray.push(this.tiles[tile.y][tile.x - 1]);
+      if (tile.x < this.width - 1 && tile.y > 0) {
+        semiResultArray.push(this.tiles[tile.y - 1][tile.x + 1]);
+      }
+    }
+
+    if (semiResultArray.length > 0) {
+      for (let i = 0; i < semiResultArray.length; i++) {
+        if (semiResultArray[i] !== undefined) {
+          resultArray.push(semiResultArray[i]);
+        }
       }
     }
     return resultArray;
