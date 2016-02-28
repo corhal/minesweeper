@@ -7,8 +7,9 @@ import Appearance from '../components/Appearance';
  * @class Game
  */
 export default class Game {
-  constructor(board) {
+  constructor(board, textMatrix) {
     this.board = board;
+    this.textMatrix = textMatrix;
 
     window.addEventListener('click', (event) => {
       const clickedTileObject = this.board.getTileByAbsCoordinates(event.clientX, event.clientY);
@@ -17,9 +18,43 @@ export default class Game {
         clickedTile.isRevealed = true;
         clickedTileObject.removeComponent(Appearance);
         clickedTileObject.addComponent(new Appearance('assets/TileRevealed.png', { x: 0.5, y: 0.5 }));
-        console.log(clickedTileObject);
+        const text = this.getTextByTileCoordinates(clickedTile);
+        if (clickedTile.hasMine) {
+          text.getComponent(Text).text.text = '***';
+        } else {
+          this.refreshText(clickedTile);
+        }
       }
     });
+  }
+
+  refreshText(tile) {
+    const textObject = this.getTextByTileCoordinates(tile);
+    let textToRefresh = textObject.getComponent(Text).text.text;
+    textToRefresh = '000';
+    // this.getTextByTileCoordinates(tile).getComponent(Text).text.text = '000';
+    /* const tileNeighbours = this.board.getTileNeighbours(tile, true);
+    let minesCount = 0;
+    let hasUnrevealedNeighbours = false;
+    if (tileNeighbours.length > 0) {
+      for (let i = 0; i < tileNeighbours.length; i++) {
+        if (!tileNeighbours[i].getComponent(Tile).isRevealed) {
+          hasUnrevealedNeighbours = true;
+        }
+        if (tileNeighbours[i].getComponent(Tile).hasMine) {
+          minesCount++;
+        }
+      }
+    }
+    if (!hasUnrevealedNeighbours) {
+      textToRefresh = '';
+    } else {
+      textToRefresh = minesCount;
+    }*/
+  }
+
+  getTextByTileCoordinates(tile) {
+    return this.textMatrix[tile.y][tile.x];
   }
 }
 

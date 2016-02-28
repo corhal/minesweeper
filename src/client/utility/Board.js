@@ -49,10 +49,18 @@ export default class BoardSystem {
   getTileNeighbours(tile, immediate) {
     const resultArray = [];
     if (immediate) {
-      resultArray.push(this.tiles[tile.y + 1][tile.x]);
-      resultArray.push(this.tiles[tile.y - 1][tile.x]);
-      resultArray.push(this.tiles[tile.y][tile.x + 1]);
-      resultArray.push(this.tiles[tile.y][tile.x - 1]);
+      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
+        resultArray.push(this.tiles[tile.y + 1][tile.x]);
+      }
+      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
+        resultArray.push(this.tiles[tile.y - 1][tile.x]);
+      }
+      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
+        resultArray.push(this.tiles[tile.y][tile.x + 1]);
+      }
+      if (this.tiles[tile.y + 1][tile.x] !== undefined) {
+        resultArray.push(this.tiles[tile.y][tile.x - 1]);
+      }
     }
     return resultArray;
   }

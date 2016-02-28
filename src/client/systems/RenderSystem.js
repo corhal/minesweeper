@@ -78,10 +78,10 @@ export default class RenderSystem {
     const object = this.objects[entity.id];
 
     if (appearance !== undefined && object !== appearance.object) {
-      console.log('Should change appearance');
       this.removeEntitiesByIds([entity.id]);
       this.addEntity(entity);
     }
+
 
     object.position.x = transform.position.x;
     object.position.y = transform.position.y;

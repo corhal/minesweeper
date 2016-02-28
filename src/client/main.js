@@ -25,9 +25,11 @@ function onAssetsLoaded() {
   engine.registerSystem(render);
 
   const boardMatrix = board.tiles;
+  const textMatrix = [];
 
   for (let i = 0; i < boardMatrix.length; i++) {
     const xArray = boardMatrix[i];
+    const textXarray = [];
 
     for (let j = 0; j < xArray.length; j++) {
       engine.addEntity(xArray[j]);
@@ -36,12 +38,14 @@ function onAssetsLoaded() {
       if (tile.hasMine) {
         text = '*';
       } else {
-        text = '';
+        text = ' ';
       }
       const textEntity = new TextLabel(xArray[j].getComponent(Transform), text);
+      textXarray.push(textEntity);
       engine.addEntity(textEntity);
     }
+    textMatrix.push(textXarray);
   }
 
-  const game = new Game(board);
+  const game = new Game(board, textMatrix);
 }
