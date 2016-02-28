@@ -32,7 +32,7 @@ export default class Game {
     }
   }
 
-  refreshText(tile) {
+  refreshText(tile) { // Здесь водятся чудовища
     const textObject = this.getTextByTileCoordinates(tile).getComponent(Text);
     const textToRefresh = textObject.text;
     const tileNeighbours = this.board.getTileNeighbours(tile, false);
@@ -63,7 +63,7 @@ export default class Game {
         textToRefresh.text = minesCount;
       }
 
-      if (minesCount === 0) { // max call stack exceeded :(
+      if (minesCount === 0) {
         tileNeighbours.forEach(this.revealTile, this);
       }
     }

@@ -82,7 +82,6 @@ export default class RenderSystem {
       this.addEntity(entity);
     }
 
-
     object.position.x = transform.position.x;
     object.position.y = transform.position.y;
     object.rotation = transform.angle * Math.PI / 180;
