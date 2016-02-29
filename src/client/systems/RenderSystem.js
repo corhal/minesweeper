@@ -72,7 +72,7 @@ export default class RenderSystem {
     }
   }
 
-  updateEntity(entity) {
+  updateEntity(entity) { // похоже, проблема в том, что из-за сортировки id перестают совпадать с id object
     const transform = entity.getComponent(Transform);
     const appearance = entity.getComponent(Appearance);
     const object = this.objects[entity.id];
@@ -102,6 +102,9 @@ export default class RenderSystem {
     const renderEntities = entities.filter((el) => {
       return el.hasComponent(Appearance) || el.hasComponent(Text);
     });
+
+    console.log(renderEntities);
+
     const oldIds = Object.keys(this.objects).map((id) => {
       return parseInt(id, 10);
     });

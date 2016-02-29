@@ -51,7 +51,7 @@ export default class BoardSystem {
     return result;
   }
 
-  getTileNeighboursTiles(tile, immediate) {
+  getTileNeighboursTiles(tile, immediate) { // Возвращает массив компонентов Tile
     let resultArray = [];
     const returnArray = [];
     resultArray = this.getTileNeighbours(tile, immediate);
@@ -61,7 +61,7 @@ export default class BoardSystem {
     return returnArray;
   }
 
-  getTileNeighbours(tile, immediate) { // Govnocode time
+  getTileNeighbours(tile, immediate) { // Govnocode time; возвращает массив энтити, у которых есть компонент Tile
     const resultArray = [];
     const semiResultArray = [];
 

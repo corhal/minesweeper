@@ -18,6 +18,26 @@ export default class Game {
         this.revealTile(clickedTileObject);
       }
     });
+
+    window.addEventListener('mousedown', (event) => {
+      const clickedTileObject = this.board.getTileByAbsCoordinates(event.clientX, event.clientY);
+      const clickedTile = clickedTileObject.getComponent(Tile);
+      if (clickedTile.isRevealed) {
+        this.highlightNeighbours(clickedTileObject);
+      }
+    });
+  }
+
+  highlightNeighbours(tileObject) {
+    const tile = tileObject.getComponent(Tile);
+    const tileNeighbours = this.board.getTileNeighbours(tile, false);
+    for (const tileNeighbour of tileNeighbours) {
+      console.log(tileNeighbour.getComponent(Appearance));
+      console.log(tileNeighbour);
+      tileNeighbour.removeComponent(Appearance);
+      console.log(tileNeighbour.getComponent(Appearance));
+      console.log(tileNeighbour);
+    }
   }
 
   revealTile(tileObject) {

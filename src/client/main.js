@@ -9,7 +9,7 @@ import Game from './utility/Game';
 import RenderSystem from './systems/RenderSystem';
 import engine from './engine';
 
-const assetsToLoad = ['assets/bunny.png', 'assets/carrot.png', 'assets/tileRevealed.png', 'assets/tileUnrevealed.png'];
+const assetsToLoad = ['assets/bunny.png', 'assets/carrot.png', 'assets/tileRevealed.png', 'assets/tileUnrevealed.png', 'assets/tileHighlighted.png'];
 
 const render = new RenderSystem(Canvas.Width, Canvas.Height, Canvas.BackgroundColor);
 const loader = PIXI.loader;
