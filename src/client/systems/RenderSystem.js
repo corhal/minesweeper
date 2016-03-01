@@ -47,7 +47,8 @@ export default class RenderSystem {
 
   removeEntitiesByIds(ids) {
     ids.forEach((id) => {
-      this.stage.removeChild(this.objects[id]);
+      this.spriteContainer.removeChild(this.objects[id]);
+      this.textContainer.removeChild(this.objects[id]);
       delete this.objects[id];
     });
   }
@@ -102,8 +103,6 @@ export default class RenderSystem {
     const renderEntities = entities.filter((el) => {
       return el.hasComponent(Appearance) || el.hasComponent(Text);
     });
-
-    console.log(renderEntities);
 
     const oldIds = Object.keys(this.objects).map((id) => {
       return parseInt(id, 10);

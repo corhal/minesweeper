@@ -10,33 +10,75 @@ export default class Game {
   constructor(board, textMatrix) {
     this.board = board;
     this.textMatrix = textMatrix;
+    this.isInMarkMode = false;
+    this.highlightTileSource;
 
     window.addEventListener('click', (event) => {
       const clickedTileObject = this.board.getTileByAbsCoordinates(event.clientX, event.clientY);
       const clickedTile = clickedTileObject.getComponent(Tile);
-      if (!clickedTile.isRevealed) {
+      if (this.isInMarkMode) {
+        this.markTile(clickedTileObject);
+      } else if (!clickedTile.isRevealed) {
         this.revealTile(clickedTileObject);
       }
     });
 
     window.addEventListener('mousedown', (event) => {
-      const clickedTileObject = this.board.getTileByAbsCoordinates(event.clientX, event.clientY);
-      const clickedTile = clickedTileObject.getComponent(Tile);
+      this.highlightTileSource = this.board.getTileByAbsCoordinates(event.clientX, event.clientY);
+      const clickedTile = this.highlightTileSource.getComponent(Tile);
       if (clickedTile.isRevealed) {
-        this.highlightNeighbours(clickedTileObject);
+        this.highlightNeighbours(this.highlightTileSource);
       }
     });
+
+    window.addEventListener('mouseup', () => {
+      if (this.highlightTileSource !== undefined) {
+        const clickedTile = this.highlightTileSource.getComponent(Tile);
+        if (clickedTile.isRevealed) {
+          this.stopHighlightNeighbours(this.highlightTileSource);
+        }
+      }
+    });
+
+    window.addEventListener('keypress', (event) => {
+      if (event.keyCode === 49) {
+        this.isInMarkMode = !this.isInMarkMode;
+      }
+    });
+  }
+
+  markTile(tileObject) {
+    const tile = tileObject.getComponent(Tile);
+    const textObject = this.getTextByTileCoordinates(tile).getComponent(Text);
+    const textToMark = textObject.text;
+    if (!tile.isMarked && !tile.isRevealed) {
+      textToMark.text = '*';
+      tile.isMarked = true;
+    } else if (tile.isMarked && !tile.isRevealed) {
+      textToMark.text = '';
+      tile.isMarked = false;
+    }
   }
 
   highlightNeighbours(tileObject) {
     const tile = tileObject.getComponent(Tile);
     const tileNeighbours = this.board.getTileNeighbours(tile, false);
     for (const tileNeighbour of tileNeighbours) {
-      console.log(tileNeighbour.getComponent(Appearance));
-      console.log(tileNeighbour);
-      tileNeighbour.removeComponent(Appearance);
-      console.log(tileNeighbour.getComponent(Appearance));
-      console.log(tileNeighbour);
+      const neighbourTile = tileNeighbour.getComponent(Tile);
+      if (!neighbourTile.isRevealed && !neighbourTile.isMarked) {
+        tileNeighbour.removeComponent(Appearance);
+      }
+    }
+  }
+
+  stopHighlightNeighbours(tileObject) {
+    const tile = tileObject.getComponent(Tile);
+    const tileNeighbours = this.board.getTileNeighbours(tile, false);
+    for (const tileNeighbour of tileNeighbours) {
+      const neighbourTile = tileNeighbour.getComponent(Tile);
+      if (!neighbourTile.isRevealed && !neighbourTile.isMarked) {
+        tileNeighbour.addComponent(new Appearance('assets/tileUnrevealed.png', { x: 0.5, y: 0.5 }));
+      }
     }
   }
 
@@ -59,11 +101,11 @@ export default class Game {
     let minesCount = 0;
     let hasUnrevealedNeighbours = false;
     if (!tile.isRevealed) {
-      if (tile.hasMine) {
-        textToRefresh.text = '*';
+      /* if (tile.hasMine) {
+        textToRefresh.text = '';
       } else {
         textToRefresh.text = '';
-      }
+      }*/
     } else {
       if (tileNeighbours.length > 0) {
         for (let i = 0; i < tileNeighbours.length; i++) {

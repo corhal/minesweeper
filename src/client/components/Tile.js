@@ -8,6 +8,7 @@ export default class Tile {
 
     this.hasMine = hasMine;
     this.isRevealed = false;
+    this.isMarked = false;
     this.width = width;
     this.height = height;
   }

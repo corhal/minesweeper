@@ -36,7 +36,7 @@ function onAssetsLoaded() {
       const tile = xArray[j].getComponent(Tile);
       let text;
       if (tile.hasMine) {
-        text = '*';
+        text = ' ';
       } else {
         text = ' ';
       }
