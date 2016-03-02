@@ -1,8 +1,8 @@
 'use strict';
 
 const Canvas = {
-  Width: 800,
-  Height: 600,
+  Width: 768,
+  Height: 576,
   BackgroundColor: 0x1099bb
 };
 
